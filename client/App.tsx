@@ -1,7 +1,4 @@
-import "./global.css";
-
 import { Toaster } from "@/components/ui/toaster";
-import { createRoot } from "react-dom/client";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -16,34 +13,26 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const AppComponent = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/setup" element={<SetupWizard />} />
-          <Route path="/parent-login" element={<ParentLogin />} />
-          <Route path="/parent-dashboard" element={<ParentDashboard />} />
-          <Route path="/parent-child-details/:childId" element={<div className="text-center py-12">Child details page coming soon</div>} />
-          <Route path="/kid-login" element={<KidLogin />} />
-          <Route path="/kid-dashboard" element={<KidDashboard />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
-
-if (typeof document !== "undefined") {
-  const rootElement = document.getElementById("root");
-  if (rootElement) {
-    if (!(rootElement as any).__reactContainer) {
-      (rootElement as any).__reactContainer = createRoot(rootElement);
-    }
-    (rootElement as any).__reactContainer.render(<AppComponent />);
-  }
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/setup" element={<SetupWizard />} />
+            <Route path="/parent-login" element={<ParentLogin />} />
+            <Route path="/parent-dashboard" element={<ParentDashboard />} />
+            <Route path="/parent-child-details/:childId" element={<div className="text-center py-12">Child details page coming soon</div>} />
+            <Route path="/kid-login" element={<KidLogin />} />
+            <Route path="/kid-dashboard" element={<KidDashboard />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
 }
