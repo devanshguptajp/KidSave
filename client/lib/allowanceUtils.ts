@@ -28,7 +28,7 @@ export function shouldApplyAllowance(child: Child): boolean {
 
 export function applyAllowance(child: Child): { updatedChild: Child; notification: Notification } {
   const notification: Notification = {
-    id: uuidv4(),
+    id: generateId(),
     type: 'allowance',
     message: `You received ${child.allowanceAmount} as allowance!`,
     timestamp: Date.now(),
