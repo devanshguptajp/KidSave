@@ -127,3 +127,59 @@ export function resetAppState(): void {
     }
   });
 }
+
+export function createWithdrawalRequest(childId: string, childName: string, amount: number, reason?: string): { id: string } {
+  const state = getAppState();
+  const id = Date.now().toString();
+
+  const request = {
+    id,
+    childId,
+    childName,
+    amount,
+    reason,
+    status: 'pending' as const,
+    requestedAt: Date.now(),
+  };
+
+  state.withdrawalRequests.push(request);
+  saveAppState(state);
+
+  return { id };
+}
+
+export function getPendingWithdrawalRequests(): any[] {
+  const state = getAppState();
+  return state.withdrawalRequests.filter(r => r.status === 'pending');
+}
+
+export function getWithdrawalRequest(id: string): any | undefined {
+  const state = getAppState();
+  return state.withdrawalRequests.find(r => r.id === id);
+}
+
+export function approveWithdrawalRequest(requestId: string): void {
+  const state = getAppState();
+  const request = state.withdrawalRequests.find(r => r.id === requestId);
+
+  if (request && request.status === 'pending') {
+    const child = state.children.find(c => c.id === request.childId);
+    if (child && child.balance >= request.amount) {
+      child.balance -= request.amount;
+      request.status = 'approved';
+      request.respondedAt = Date.now();
+      saveAppState(state);
+    }
+  }
+}
+
+export function declineWithdrawalRequest(requestId: string): void {
+  const state = getAppState();
+  const request = state.withdrawalRequests.find(r => r.id === requestId);
+
+  if (request && request.status === 'pending') {
+    request.status = 'declined';
+    request.respondedAt = Date.now();
+    saveAppState(state);
+  }
+}
