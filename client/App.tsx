@@ -40,9 +40,10 @@ const AppComponent = () => (
 
 if (typeof document !== "undefined") {
   const rootElement = document.getElementById("root");
-  if (rootElement && !(rootElement as any).__reactContainer) {
-    const root = createRoot(rootElement);
-    (rootElement as any).__reactContainer = root;
-    root.render(<AppComponent />);
+  if (rootElement) {
+    if (!(rootElement as any).__reactContainer) {
+      (rootElement as any).__reactContainer = createRoot(rootElement);
+    }
+    (rootElement as any).__reactContainer.render(<AppComponent />);
   }
 }
