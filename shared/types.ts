@@ -62,6 +62,7 @@ export interface AppState {
   children: Child[];
   currency: Currency;
   parentNotifications: Notification[];
+  withdrawalRequests: WithdrawalRequest[];
   setupComplete: boolean;
 }
 
