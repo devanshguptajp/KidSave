@@ -2,12 +2,25 @@ export type Currency = 'INR' | 'USD';
 
 export interface Notification {
   id: string;
-  type: 'money_added' | 'money_subtracted' | 'allowance' | 'goal_completed' | 'password_changed' | 'failed_login' | 'category_split';
+  type: 'money_added' | 'money_subtracted' | 'allowance' | 'goal_completed' | 'password_changed' | 'failed_login' | 'category_split' | 'withdrawal_request' | 'withdrawal_approved' | 'withdrawal_declined';
   message: string;
   timestamp: number;
   childId?: string;
+  childName?: string;
   amount?: number;
   read: boolean;
+  requestId?: string;
+}
+
+export interface WithdrawalRequest {
+  id: string;
+  childId: string;
+  childName: string;
+  amount: number;
+  reason?: string;
+  status: 'pending' | 'approved' | 'declined';
+  requestedAt: number;
+  respondedAt?: number;
 }
 
 export interface Category {
