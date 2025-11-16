@@ -26,7 +26,10 @@ export default function App() {
             <Route path="/setup" element={<SetupWizard />} />
             <Route path="/parent-login" element={<ParentLogin />} />
             <Route path="/parent-dashboard" element={<ParentDashboard />} />
-            <Route path="/parent-child-details/:childId" element={<ChildDetails />} />
+            <Route
+              path="/parent-child-details/:childId"
+              element={<ChildDetails />}
+            />
             <Route path="/kid-login" element={<KidLogin />} />
             <Route path="/kid-dashboard" element={<KidDashboard />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

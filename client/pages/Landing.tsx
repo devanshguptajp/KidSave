@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { Landmark, Users } from 'lucide-react';
+import { Link } from "react-router-dom";
+import { Landmark, Users } from "lucide-react";
 
 export default function Landing() {
   return (
@@ -25,7 +25,9 @@ export default function Landing() {
               Teach Kids About Money
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
-              A fun and interactive way for parents to teach their children about saving, budgeting, and financial responsibility through virtual accounts.
+              A fun and interactive way for parents to teach their children
+              about saving, budgeting, and financial responsibility through
+              virtual accounts.
             </p>
           </div>
 
@@ -45,26 +47,33 @@ export default function Landing() {
                   Parent Mode
                 </h3>
                 <p className="text-gray-600 mb-6 text-lg">
-                  Set up accounts, manage allowances, add or subtract money, and monitor your children's financial activities.
+                  Set up accounts, manage allowances, add or subtract money, and
+                  monitor your children's financial activities.
                 </p>
                 <div className="space-y-3 mb-8">
                   <div className="flex items-start gap-3">
                     <div className="w-5 h-5 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0 mt-1">
                       <span className="text-white text-sm font-bold">✓</span>
                     </div>
-                    <span className="text-gray-700">Create and manage child accounts</span>
+                    <span className="text-gray-700">
+                      Create and manage child accounts
+                    </span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-5 h-5 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0 mt-1">
                       <span className="text-white text-sm font-bold">✓</span>
                     </div>
-                    <span className="text-gray-700">Set up automatic allowances</span>
+                    <span className="text-gray-700">
+                      Set up automatic allowances
+                    </span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-5 h-5 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0 mt-1">
                       <span className="text-white text-sm font-bold">✓</span>
                     </div>
-                    <span className="text-gray-700">View activity notifications</span>
+                    <span className="text-gray-700">
+                      View activity notifications
+                    </span>
                   </div>
                 </div>
                 <button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-bold py-3 px-6 rounded-lg transition-all">
@@ -87,7 +96,8 @@ export default function Landing() {
                   Kid Mode
                 </h3>
                 <p className="text-gray-600 mb-6 text-lg">
-                  Manage your money, create savings goals, organize into categories, and watch your balance grow.
+                  Manage your money, create savings goals, organize into
+                  categories, and watch your balance grow.
                 </p>
                 <div className="space-y-3 mb-8">
                   <div className="flex items-start gap-3">
@@ -100,13 +110,17 @@ export default function Landing() {
                     <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 mt-1">
                       <span className="text-white text-sm font-bold">✓</span>
                     </div>
-                    <span className="text-gray-700">Set and complete goals</span>
+                    <span className="text-gray-700">
+                      Set and complete goals
+                    </span>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 mt-1">
                       <span className="text-white text-sm font-bold">✓</span>
                     </div>
-                    <span className="text-gray-700">Organize money into categories</span>
+                    <span className="text-gray-700">
+                      Organize money into categories
+                    </span>
                   </div>
                 </div>
                 <button className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold py-3 px-6 rounded-lg transition-all">
@@ -126,22 +140,32 @@ export default function Landing() {
                 <div className="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">💰</span>
                 </div>
-                <h4 className="font-bold text-gray-900 mb-2">Multiple Currencies</h4>
-                <p className="text-gray-600">Choose between Rupees (₹) or Dollars ($) for your account</p>
+                <h4 className="font-bold text-gray-900 mb-2">
+                  Multiple Currencies
+                </h4>
+                <p className="text-gray-600">
+                  Choose between Rupees (₹) or Dollars ($) for your account
+                </p>
               </div>
               <div className="text-center">
                 <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">🎯</span>
                 </div>
                 <h4 className="font-bold text-gray-900 mb-2">Savings Goals</h4>
-                <p className="text-gray-600">Create goals and track progress toward financial milestones</p>
+                <p className="text-gray-600">
+                  Create goals and track progress toward financial milestones
+                </p>
               </div>
               <div className="text-center">
                 <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">🔒</span>
                 </div>
-                <h4 className="font-bold text-gray-900 mb-2">Secure & Private</h4>
-                <p className="text-gray-600">PIN-protected accounts with secure access controls</p>
+                <h4 className="font-bold text-gray-900 mb-2">
+                  Secure & Private
+                </h4>
+                <p className="text-gray-600">
+                  PIN-protected accounts with secure access controls
+                </p>
               </div>
             </div>
           </div>
@@ -152,7 +176,8 @@ export default function Landing() {
       <footer className="border-t border-gray-200 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <p className="text-center text-gray-600">
-            © 2024 PiggyBank. Teaching kids about money, one transaction at a time.
+            © 2024 PiggyBank. Teaching kids about money, one transaction at a
+            time.
           </p>
         </div>
       </footer>

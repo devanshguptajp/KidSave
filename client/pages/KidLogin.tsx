@@ -1,34 +1,34 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { getAppState } from '@/lib/appState';
-import { verifyPin, formatPinInput } from '@/lib/pinValidation';
-import { ArrowLeft, User } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { getAppState } from "@/lib/appState";
+import { verifyPin, formatPinInput } from "@/lib/pinValidation";
+import { ArrowLeft, User } from "lucide-react";
 
-type LoginMode = 'select' | 'pin' | 'noaccount';
+type LoginMode = "select" | "pin" | "noaccount";
 
 export default function KidLogin() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<LoginMode>('select');
+  const [mode, setMode] = useState<LoginMode>("select");
   const [selectedChild, setSelectedChild] = useState<string | null>(null);
-  const [pin, setPin] = useState('');
-  const [error, setError] = useState('');
+  const [pin, setPin] = useState("");
+  const [error, setError] = useState("");
   const [children, setChildren] = useState<any[]>([]);
 
   useEffect(() => {
     const state = getAppState();
     if (!state.setupComplete) {
-      navigate('/setup');
+      navigate("/setup");
     } else {
       setChildren(state.children);
     }
   }, [navigate]);
 
   const handleSelectChild = (childId: string) => {
-    const child = children.find(c => c.id === childId);
+    const child = children.find((c) => c.id === childId);
     setSelectedChild(childId);
-    
+
     if (child.pinHash) {
-      setMode('pin');
+      setMode("pin");
     } else {
       // No PIN set, go directly to dashboard
       loginChild(childId);
@@ -36,35 +36,35 @@ export default function KidLogin() {
   };
 
   const loginChild = (childId: string) => {
-    localStorage.setItem('currentChildId', childId);
-    localStorage.setItem('kidMode', 'true');
-    navigate('/kid-dashboard');
+    localStorage.setItem("currentChildId", childId);
+    localStorage.setItem("kidMode", "true");
+    navigate("/kid-dashboard");
   };
 
   const handlePinSubmit = () => {
-    setError('');
+    setError("");
 
     if (pin.length !== 4) {
-      setError('PIN must be exactly 4 digits');
+      setError("PIN must be exactly 4 digits");
       return;
     }
 
-    const child = children.find(c => c.id === selectedChild);
+    const child = children.find((c) => c.id === selectedChild);
     if (!child) {
-      setError('Child not found');
+      setError("Child not found");
       return;
     }
 
     if (verifyPin(pin, child.pinHash)) {
       loginChild(selectedChild!);
     } else {
-      setError('Invalid PIN. Please try again.');
-      setPin('');
+      setError("Invalid PIN. Please try again.");
+      setPin("");
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handlePinSubmit();
     }
   };
@@ -90,13 +90,17 @@ export default function KidLogin() {
         </div>
 
         {/* Select Child */}
-        {mode === 'select' && (
+        {mode === "select" && (
           <div className="bg-white rounded-2xl shadow-lg p-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Who are you?</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-6">
+              Who are you?
+            </h2>
 
             {children.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-gray-600 mb-6">No accounts yet. Ask your parent to create one for you!</p>
+                <p className="text-gray-600 mb-6">
+                  No accounts yet. Ask your parent to create one for you!
+                </p>
                 <Link
                   to="/"
                   className="inline-block bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold py-2 px-6 rounded-lg transition-all"
@@ -119,7 +123,7 @@ export default function KidLogin() {
                       <div>
                         <p className="font-bold text-gray-900">{child.name}</p>
                         <p className="text-sm text-gray-600">
-                          {child.pinHash ? '🔒 PIN protected' : 'No PIN'}
+                          {child.pinHash ? "🔒 PIN protected" : "No PIN"}
                         </p>
                       </div>
                     </div>
@@ -131,10 +135,10 @@ export default function KidLogin() {
         )}
 
         {/* PIN Entry */}
-        {mode === 'pin' && selectedChild && (
+        {mode === "pin" && selectedChild && (
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <button
-              onClick={() => setMode('select')}
+              onClick={() => setMode("select")}
               className="mb-4 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -145,7 +149,7 @@ export default function KidLogin() {
               Enter your PIN
             </h2>
             <p className="text-gray-600 mb-8">
-              It's {children.find(c => c.id === selectedChild)?.name}'s turn!
+              It's {children.find((c) => c.id === selectedChild)?.name}'s turn!
             </p>
 
             <div className="mb-8">

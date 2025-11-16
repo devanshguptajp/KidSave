@@ -1,45 +1,45 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { getAppState } from '@/lib/appState';
-import { verifyPin, formatPinInput } from '@/lib/pinValidation';
-import { Lock, ArrowLeft } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { getAppState } from "@/lib/appState";
+import { verifyPin, formatPinInput } from "@/lib/pinValidation";
+import { Lock, ArrowLeft } from "lucide-react";
 
 export default function ParentLogin() {
   const navigate = useNavigate();
-  const [pin, setPin] = useState('');
-  const [error, setError] = useState('');
+  const [pin, setPin] = useState("");
+  const [error, setError] = useState("");
   const [isSetup, setIsSetup] = useState(false);
 
   useEffect(() => {
     const state = getAppState();
     if (!state.setupComplete) {
-      navigate('/setup');
+      navigate("/setup");
     } else {
       setIsSetup(true);
     }
   }, [navigate]);
 
   const handleLogin = () => {
-    setError('');
+    setError("");
 
     if (pin.length !== 4) {
-      setError('PIN must be exactly 4 digits');
+      setError("PIN must be exactly 4 digits");
       return;
     }
 
     const state = getAppState();
     if (state.parentPinHash && verifyPin(pin, state.parentPinHash)) {
-      localStorage.setItem('parentMode', 'true');
-      localStorage.setItem('parentLoginTime', Date.now().toString());
-      navigate('/parent-dashboard');
+      localStorage.setItem("parentMode", "true");
+      localStorage.setItem("parentLoginTime", Date.now().toString());
+      navigate("/parent-dashboard");
     } else {
-      setError('Invalid PIN. Please try again.');
-      setPin('');
+      setError("Invalid PIN. Please try again.");
+      setPin("");
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleLogin();
     }
   };
@@ -102,7 +102,11 @@ export default function ParentLogin() {
           </button>
 
           <p className="text-center text-gray-600 text-sm">
-            First time? <Link to="/setup" className="text-purple-600 hover:text-purple-700 font-semibold">
+            First time?{" "}
+            <Link
+              to="/setup"
+              className="text-purple-600 hover:text-purple-700 font-semibold"
+            >
               Complete setup
             </Link>
           </p>
@@ -110,7 +114,9 @@ export default function ParentLogin() {
 
         {/* Info Box */}
         <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="font-semibold text-gray-900 mb-2">Parent Mode Features</h3>
+          <h3 className="font-semibold text-gray-900 mb-2">
+            Parent Mode Features
+          </h3>
           <ul className="text-sm text-gray-700 space-y-1">
             <li>✓ Manage child accounts</li>
             <li>✓ Set allowances and monitor spending</li>

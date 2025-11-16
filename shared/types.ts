@@ -1,8 +1,18 @@
-export type Currency = 'INR' | 'USD';
+export type Currency = "INR" | "USD";
 
 export interface Notification {
   id: string;
-  type: 'money_added' | 'money_subtracted' | 'allowance' | 'goal_completed' | 'password_changed' | 'failed_login' | 'category_split' | 'withdrawal_request' | 'withdrawal_approved' | 'withdrawal_declined';
+  type:
+    | "money_added"
+    | "money_subtracted"
+    | "allowance"
+    | "goal_completed"
+    | "password_changed"
+    | "failed_login"
+    | "category_split"
+    | "withdrawal_request"
+    | "withdrawal_approved"
+    | "withdrawal_declined";
   message: string;
   timestamp: number;
   childId?: string;
@@ -18,7 +28,7 @@ export interface WithdrawalRequest {
   childName: string;
   amount: number;
   reason?: string;
-  status: 'pending' | 'approved' | 'declined';
+  status: "pending" | "approved" | "declined";
   requestedAt: number;
   respondedAt?: number;
 }
@@ -52,7 +62,7 @@ export interface Child {
   notifications: string[];
   createdAt: number;
   allowanceAmount?: number;
-  allowanceFrequency?: 'daily' | 'weekly' | 'custom';
+  allowanceFrequency?: "daily" | "weekly" | "custom";
   allowanceInterval?: number;
   lastAllowanceDate?: number;
 }

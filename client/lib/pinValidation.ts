@@ -1,4 +1,4 @@
-const MASTER_PASSWORD = '9999';
+const MASTER_PASSWORD = "9999";
 
 export function validatePin(pin: string): boolean {
   return /^\d{4}$/.test(pin);
@@ -6,7 +6,7 @@ export function validatePin(pin: string): boolean {
 
 export function hashPin(pin: string): string {
   if (!validatePin(pin)) {
-    throw new Error('PIN must be exactly 4 digits');
+    throw new Error("PIN must be exactly 4 digits");
   }
   let hash = 0;
   for (let i = 0; i < pin.length; i++) {
@@ -32,5 +32,5 @@ export function isMasterPassword(pin: string): boolean {
 }
 
 export function formatPinInput(value: string): string {
-  return value.replace(/\D/g, '').slice(0, 4);
+  return value.replace(/\D/g, "").slice(0, 4);
 }

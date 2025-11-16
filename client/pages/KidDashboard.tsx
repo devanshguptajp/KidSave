@@ -1,8 +1,15 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getChild, getAppState } from '@/lib/appState';
-import { getCurrencySymbol, formatCurrency } from '@/lib/currency';
-import { LogOut, Plus, Wallet, Target, PiggyBank as PiggyBankIcon, Bell } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getChild, getAppState } from "@/lib/appState";
+import { getCurrencySymbol, formatCurrency } from "@/lib/currency";
+import {
+  LogOut,
+  Plus,
+  Wallet,
+  Target,
+  PiggyBank as PiggyBankIcon,
+  Bell,
+} from "lucide-react";
 
 export default function KidDashboard() {
   const navigate = useNavigate();
@@ -10,17 +17,17 @@ export default function KidDashboard() {
   const [state, setState] = useState(getAppState());
 
   useEffect(() => {
-    const childId = localStorage.getItem('currentChildId');
-    const isKid = localStorage.getItem('kidMode');
-    
+    const childId = localStorage.getItem("currentChildId");
+    const isKid = localStorage.getItem("kidMode");
+
     if (!isKid || !childId) {
-      navigate('/kid-login');
+      navigate("/kid-login");
       return;
     }
 
     const foundChild = getChild(childId);
     if (!foundChild) {
-      navigate('/kid-login');
+      navigate("/kid-login");
       return;
     }
 
@@ -28,9 +35,9 @@ export default function KidDashboard() {
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem('kidMode');
-    localStorage.removeItem('currentChildId');
-    navigate('/kid-login');
+    localStorage.removeItem("kidMode");
+    localStorage.removeItem("currentChildId");
+    navigate("/kid-login");
   };
 
   if (!child) {
@@ -46,7 +53,9 @@ export default function KidDashboard() {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Hi, {child.name}! 👋</h1>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Hi, {child.name}! 👋
+            </h1>
             <p className="text-gray-600">Your Money Dashboard</p>
           </div>
           <div className="flex items-center gap-4">
@@ -75,7 +84,8 @@ export default function KidDashboard() {
         <div className="bg-gradient-to-br from-blue-600 to-cyan-600 rounded-2xl shadow-2xl p-8 sm:p-12 mb-8 text-white">
           <p className="text-blue-100 mb-2 text-lg">Your Total Balance</p>
           <h2 className="text-5xl sm:text-6xl font-bold mb-8">
-            {currencySymbol}{child.balance.toFixed(2)}
+            {currencySymbol}
+            {child.balance.toFixed(2)}
           </h2>
 
           <div className="grid sm:grid-cols-3 gap-4">
@@ -103,7 +113,8 @@ export default function KidDashboard() {
               <PiggyBankIcon className="w-6 h-6 text-pink-600" />
             </div>
             <p className="text-4xl font-bold text-pink-600 mb-4">
-              {currencySymbol}{child.piggyBank.toFixed(2)}
+              {currencySymbol}
+              {child.piggyBank.toFixed(2)}
             </p>
             <button className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white font-bold py-2 px-4 rounded-lg transition-all">
               Manage
@@ -131,7 +142,7 @@ export default function KidDashboard() {
               <Target className="w-6 h-6 text-green-600" />
             </div>
             <p className="text-4xl font-bold text-green-600 mb-4">
-              {child.goals.filter(g => !g.completed).length}
+              {child.goals.filter((g) => !g.completed).length}
             </p>
             <button className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-2 px-4 rounded-lg transition-all">
               View All
@@ -142,16 +153,27 @@ export default function KidDashboard() {
         {/* Categories Section */}
         {child.categories.length > 0 && (
           <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">My Categories</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">
+              My Categories
+            </h3>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {child.categories.slice(0, 3).map((category: any) => (
-                <div key={category.id} className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4">
-                  <h4 className="font-bold text-gray-900 mb-2">{category.name}</h4>
+                <div
+                  key={category.id}
+                  className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4"
+                >
+                  <h4 className="font-bold text-gray-900 mb-2">
+                    {category.name}
+                  </h4>
                   <p className="text-2xl font-bold text-blue-600 mb-3">
-                    {currencySymbol}{category.balance.toFixed(2)}
+                    {currencySymbol}
+                    {category.balance.toFixed(2)}
                   </p>
                   <div className="w-full bg-gray-300 rounded-full h-2">
-                    <div className="bg-blue-600 h-2 rounded-full" style={{ width: '60%' }} />
+                    <div
+                      className="bg-blue-600 h-2 rounded-full"
+                      style={{ width: "60%" }}
+                    />
                   </div>
                 </div>
               ))}
@@ -170,21 +192,34 @@ export default function KidDashboard() {
             <h3 className="text-2xl font-bold text-gray-900 mb-6">My Goals</h3>
             <div className="space-y-4">
               {child.goals.slice(0, 3).map((goal: any) => (
-                <div key={goal.id} className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-4">
+                <div
+                  key={goal.id}
+                  className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-4"
+                >
                   <div className="flex items-center justify-between mb-3">
                     <h4 className="font-bold text-gray-900">{goal.name}</h4>
-                    <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                      goal.completed ? 'bg-green-200 text-green-800' : 'bg-blue-200 text-blue-800'
-                    }`}>
-                      {goal.completed ? '✓ Completed' : 'In Progress'}
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                        goal.completed
+                          ? "bg-green-200 text-green-800"
+                          : "bg-blue-200 text-blue-800"
+                      }`}
+                    >
+                      {goal.completed ? "✓ Completed" : "In Progress"}
                     </span>
                   </div>
                   <div className="w-full bg-gray-300 rounded-full h-3 mb-2">
-                    <div className="bg-gradient-to-r from-green-500 to-emerald-500 h-3 rounded-full transition-all" 
-                         style={{ width: `${(goal.currentAmount / goal.targetAmount) * 100}%` }} />
+                    <div
+                      className="bg-gradient-to-r from-green-500 to-emerald-500 h-3 rounded-full transition-all"
+                      style={{
+                        width: `${(goal.currentAmount / goal.targetAmount) * 100}%`,
+                      }}
+                    />
                   </div>
                   <p className="text-sm text-gray-600">
-                    {currencySymbol}{goal.currentAmount.toFixed(2)} of {currencySymbol}{goal.targetAmount.toFixed(2)}
+                    {currencySymbol}
+                    {goal.currentAmount.toFixed(2)} of {currencySymbol}
+                    {goal.targetAmount.toFixed(2)}
                   </p>
                 </div>
               ))}
@@ -200,9 +235,12 @@ export default function KidDashboard() {
         {/* Empty State */}
         {child.categories.length === 0 && child.goals.length === 0 && (
           <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Let's Get Started! 🎉</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              Let's Get Started! 🎉
+            </h3>
             <p className="text-gray-600 mb-8 max-w-md mx-auto">
-              Create your first category to organize your money or set a savings goal!
+              Create your first category to organize your money or set a savings
+              goal!
             </p>
             <button className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold py-3 px-8 rounded-lg transition-all inline-flex items-center gap-2">
               <Plus className="w-5 h-5" />

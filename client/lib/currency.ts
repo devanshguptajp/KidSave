@@ -1,13 +1,13 @@
-import { Currency } from '@shared/types';
+import { Currency } from "@shared/types";
 
 const CURRENCY_SYMBOLS: Record<Currency, string> = {
-  INR: '₹',
-  USD: '$',
+  INR: "₹",
+  USD: "$",
 };
 
 const CURRENCY_NAMES: Record<Currency, string> = {
-  INR: 'Indian Rupees',
-  USD: 'US Dollars',
+  INR: "Indian Rupees",
+  USD: "US Dollars",
 };
 
 export function getCurrencySymbol(currency: Currency): string {
@@ -23,7 +23,10 @@ export function formatCurrency(amount: number, currency: Currency): string {
   return `${symbol}${amount.toFixed(2)}`;
 }
 
-export function formatCurrencyShort(amount: number, currency: Currency): string {
+export function formatCurrencyShort(
+  amount: number,
+  currency: Currency,
+): string {
   const symbol = getCurrencySymbol(currency);
   if (amount >= 1000000) {
     return `${symbol}${(amount / 1000000).toFixed(1)}M`;

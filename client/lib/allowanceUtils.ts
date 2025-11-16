@@ -1,11 +1,15 @@
-import { Child, Notification } from '@shared/types';
+import { Child, Notification } from "@shared/types";
 
 function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
 }
 
 export function shouldApplyAllowance(child: Child): boolean {
-  if (!child.allowanceAmount || !child.allowanceFrequency || !child.lastAllowanceDate) {
+  if (
+    !child.allowanceAmount ||
+    !child.allowanceFrequency ||
+    !child.lastAllowanceDate
+  ) {
     return false;
   }
 
@@ -14,11 +18,11 @@ export function shouldApplyAllowance(child: Child): boolean {
   const timeDifference = now - lastDate;
 
   switch (child.allowanceFrequency) {
-    case 'daily':
+    case "daily":
       return timeDifference >= 24 * 60 * 60 * 1000;
-    case 'weekly':
+    case "weekly":
       return timeDifference >= 7 * 24 * 60 * 60 * 1000;
-    case 'custom':
+    case "custom":
       if (!child.allowanceInterval) return false;
       return timeDifference >= child.allowanceInterval * 1000;
     default:
@@ -26,10 +30,13 @@ export function shouldApplyAllowance(child: Child): boolean {
   }
 }
 
-export function applyAllowance(child: Child): { updatedChild: Child; notification: Notification } {
+export function applyAllowance(child: Child): {
+  updatedChild: Child;
+  notification: Notification;
+} {
   const notification: Notification = {
     id: generateId(),
-    type: 'allowance',
+    type: "allowance",
     message: `You received ${child.allowanceAmount} as allowance!`,
     timestamp: Date.now(),
     amount: child.allowanceAmount,
@@ -53,13 +60,13 @@ export function getNextAllowanceDate(child: Child): Date | null {
   const lastDate = new Date(child.lastAllowanceDate);
 
   switch (child.allowanceFrequency) {
-    case 'daily':
+    case "daily":
       lastDate.setDate(lastDate.getDate() + 1);
       return lastDate;
-    case 'weekly':
+    case "weekly":
       lastDate.setDate(lastDate.getDate() + 7);
       return lastDate;
-    case 'custom':
+    case "custom":
       if (!child.allowanceInterval) return null;
       lastDate.setSeconds(lastDate.getSeconds() + child.allowanceInterval);
       return lastDate;
@@ -71,14 +78,14 @@ export function getNextAllowanceDate(child: Child): Date | null {
 export function getTimeUntilAllowance(child: Child): number | null {
   const nextDate = getNextAllowanceDate(child);
   if (!nextDate) return null;
-  
+
   const remaining = nextDate.getTime() - Date.now();
   return Math.max(0, remaining);
 }
 
 export function formatTimeUntilAllowance(milliseconds: number): string {
-  if (milliseconds <= 0) return 'Ready now!';
-  
+  if (milliseconds <= 0) return "Ready now!";
+
   const seconds = Math.floor(milliseconds / 1000);
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
