@@ -1,5 +1,8 @@
 import { Child, Notification } from '@shared/types';
-import { v4 as uuidv4 } from 'crypto';
+
+function generateId(): string {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
 
 export function shouldApplyAllowance(child: Child): boolean {
   if (!child.allowanceAmount || !child.allowanceFrequency || !child.lastAllowanceDate) {
