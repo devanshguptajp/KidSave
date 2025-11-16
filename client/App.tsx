@@ -7,6 +7,7 @@ import Landing from "./pages/Landing";
 import SetupWizard from "./pages/SetupWizard";
 import ParentLogin from "./pages/ParentLogin";
 import ParentDashboard from "./pages/ParentDashboard";
+import ChildDetails from "./pages/ChildDetails";
 import KidLogin from "./pages/KidLogin";
 import KidDashboard from "./pages/KidDashboard";
 import NotFound from "./pages/NotFound";
