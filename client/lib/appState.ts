@@ -8,6 +8,7 @@ const defaultState: AppState = {
   children: [],
   currency: 'INR',
   parentNotifications: [],
+  withdrawalRequests: [],
   setupComplete: false,
 };
 
