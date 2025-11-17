@@ -46,6 +46,44 @@ export default function KidDashboard() {
     navigate("/kid-login");
   };
 
+  const handleWithdrawalRequest = () => {
+    setWithdrawalError('');
+    setWithdrawalSuccess('');
+
+    const amount = parseFloat(withdrawalAmount);
+    if (isNaN(amount) || amount <= 0) {
+      setWithdrawalError('Please enter a valid amount');
+      return;
+    }
+
+    if (amount > child.balance) {
+      setWithdrawalError('Insufficient balance');
+      return;
+    }
+
+    createWithdrawalRequest(child.id, child.name, amount, withdrawalReason);
+
+    // Create parent notification
+    const notification = {
+      id: Date.now().toString(),
+      type: 'withdrawal_request',
+      message: `${child.name} requested ${getCurrencySymbol(state.currency)}${amount.toFixed(2)} withdrawal`,
+      timestamp: Date.now(),
+      childName: child.name,
+      amount,
+      read: false,
+    };
+
+    addParentNotification(notification);
+
+    setWithdrawalSuccess('Request sent to parent!');
+    setWithdrawalAmount('');
+    setWithdrawalReason('');
+    setTimeout(() => {
+      setShowWithdrawalForm(false);
+    }, 1500);
+  };
+
   if (!child) {
     return null;
   }
