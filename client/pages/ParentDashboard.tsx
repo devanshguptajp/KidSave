@@ -247,7 +247,18 @@ export default function ParentDashboard() {
 
         {/* Quick Actions */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-2xl shadow-lg p-8">
+          <button
+            onClick={() => {
+              if (state.children.length === 0) {
+                alert("Please create a child account first");
+              } else if (state.children.length === 1) {
+                navigate(`/parent-child-details/${state.children[0].id}`);
+              } else {
+                alert("Select a child from the list above to manage their account");
+              }
+            }}
+            className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-all text-left hover:bg-green-50"
+          >
             <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center mb-4">
               <span className="text-2xl">💰</span>
             </div>
@@ -256,11 +267,22 @@ export default function ParentDashboard() {
               Add funds to any child's account
             </p>
             <button className="text-green-600 hover:text-green-700 font-semibold text-sm">
-              Learn more →
+              Go to child account →
             </button>
-          </div>
+          </button>
 
-          <div className="bg-white rounded-2xl shadow-lg p-8">
+          <button
+            onClick={() => {
+              if (state.children.length === 0) {
+                alert("Please create a child account first");
+              } else if (state.children.length === 1) {
+                navigate(`/parent-child-details/${state.children[0].id}`);
+              } else {
+                alert("Select a child from the list above to manage their account");
+              }
+            }}
+            className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-all text-left hover:bg-blue-50"
+          >
             <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mb-4">
               <span className="text-2xl">📊</span>
             </div>
@@ -271,11 +293,14 @@ export default function ParentDashboard() {
               Automate regular allowance payments
             </p>
             <button className="text-blue-600 hover:text-blue-700 font-semibold text-sm">
-              Learn more →
+              Go to child account →
             </button>
-          </div>
+          </button>
 
-          <div className="bg-white rounded-2xl shadow-lg p-8">
+          <button
+            onClick={() => navigate("/parent-notifications")}
+            className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-all text-left hover:bg-purple-50"
+          >
             <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center mb-4">
               <span className="text-2xl">📝</span>
             </div>
@@ -286,9 +311,9 @@ export default function ParentDashboard() {
               Track all account activities and changes
             </p>
             <button className="text-purple-600 hover:text-purple-700 font-semibold text-sm">
-              Learn more →
+              View notifications →
             </button>
-          </div>
+          </button>
         </div>
       </main>
     </div>
