@@ -89,15 +89,24 @@ export default function KidDashboard() {
           </h2>
 
           <div className="grid sm:grid-cols-3 gap-4">
-            <button className="bg-white/20 hover:bg-white/30 backdrop-blur rounded-xl p-4 transition-all text-left">
-              <p className="text-blue-100 text-sm mb-1">Add to Piggy Bank</p>
+            <button
+              onClick={() => navigate('/kid-savings')}
+              className="bg-white/20 hover:bg-white/30 backdrop-blur rounded-xl p-4 transition-all text-left"
+            >
+              <p className="text-blue-100 text-sm mb-1">Add to Savings</p>
               <PiggyBankIcon className="w-6 h-6" />
             </button>
-            <button className="bg-white/20 hover:bg-white/30 backdrop-blur rounded-xl p-4 transition-all text-left">
+            <button
+              onClick={() => navigate('/kid-goals')}
+              className="bg-white/20 hover:bg-white/30 backdrop-blur rounded-xl p-4 transition-all text-left"
+            >
               <p className="text-blue-100 text-sm mb-1">Create a Goal</p>
               <Target className="w-6 h-6" />
             </button>
-            <button className="bg-white/20 hover:bg-white/30 backdrop-blur rounded-xl p-4 transition-all text-left">
+            <button
+              onClick={() => navigate('/kid-categories')}
+              className="bg-white/20 hover:bg-white/30 backdrop-blur rounded-xl p-4 transition-all text-left"
+            >
               <p className="text-blue-100 text-sm mb-1">View Categories</p>
               <Wallet className="w-6 h-6" />
             </button>
