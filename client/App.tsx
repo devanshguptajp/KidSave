@@ -27,6 +27,7 @@ export default function App() {
             <Route path="/setup" element={<SetupWizard />} />
             <Route path="/parent-login" element={<ParentLogin />} />
             <Route path="/parent-dashboard" element={<ParentDashboard />} />
+            <Route path="/parent-settings" element={<ParentSettings />} />
             <Route
               path="/parent-child-details/:childId"
               element={<ChildDetails />}
