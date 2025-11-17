@@ -145,7 +145,10 @@ export default function KidDashboard() {
             <p className="text-4xl font-bold text-blue-600 mb-4">
               {child.categories.length}
             </p>
-            <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all">
+            <button
+              onClick={() => navigate('/kid-categories')}
+              className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all"
+            >
               View All
             </button>
           </div>
