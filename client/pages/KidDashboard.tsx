@@ -162,7 +162,10 @@ export default function KidDashboard() {
             <p className="text-4xl font-bold text-green-600 mb-4">
               {child.goals.filter((g) => !g.completed).length}
             </p>
-            <button className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-2 px-4 rounded-lg transition-all">
+            <button
+              onClick={() => navigate('/kid-goals')}
+              className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-2 px-4 rounded-lg transition-all"
+            >
               View All
             </button>
           </div>
