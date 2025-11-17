@@ -96,3 +96,20 @@ export function formatTimeUntilAllowance(milliseconds: number): string {
   if (minutes > 0) return `${minutes}m ${seconds % 60}s`;
   return `${seconds}s`;
 }
+
+export function processAllowances(children: Child[]): {
+  updatedChildren: Child[];
+  notifications: Notification[];
+} {
+  const notifications: Notification[] = [];
+  const updatedChildren = children.map((child) => {
+    if (shouldApplyAllowance(child)) {
+      const { updatedChild, notification } = applyAllowance(child);
+      notifications.push(notification);
+      return updatedChild;
+    }
+    return child;
+  });
+
+  return { updatedChildren, notifications };
+}
