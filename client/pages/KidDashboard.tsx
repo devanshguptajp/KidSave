@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getChild, getAppState } from "@/lib/appState";
+import { getChild, getAppState, createWithdrawalRequest, addParentNotification } from "@/lib/appState";
 import { getCurrencySymbol, formatCurrency } from "@/lib/currency";
 import {
   LogOut,
@@ -9,6 +9,7 @@ import {
   Target,
   PiggyBank as PiggyBankIcon,
   Bell,
+  Send,
 } from "lucide-react";
 
 export default function KidDashboard() {
