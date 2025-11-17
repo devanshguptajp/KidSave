@@ -160,6 +160,84 @@ export default function KidDashboard() {
           </div>
         </div>
 
+        {/* Request Withdrawal */}
+        {showWithdrawalForm ? (
+          <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Request Withdrawal</h3>
+
+            <div className="space-y-4 mb-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Amount</label>
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-semibold">
+                    {currencySymbol}
+                  </span>
+                  <input
+                    type="number"
+                    value={withdrawalAmount}
+                    onChange={(e) => setWithdrawalAmount(e.target.value)}
+                    placeholder="0.00"
+                    className="w-full pl-8 pr-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600"
+                  />
+                </div>
+                <p className="text-sm text-gray-600 mt-1">Available: {currencySymbol}{child.balance.toFixed(2)}</p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Reason (optional)</label>
+                <input
+                  type="text"
+                  value={withdrawalReason}
+                  onChange={(e) => setWithdrawalReason(e.target.value)}
+                  placeholder="Why do you need this money?"
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600"
+                />
+              </div>
+            </div>
+
+            {withdrawalError && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
+                {withdrawalError}
+              </div>
+            )}
+
+            {withdrawalSuccess && (
+              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4 text-sm">
+                {withdrawalSuccess}
+              </div>
+            )}
+
+            <div className="flex gap-3">
+              <button
+                onClick={handleWithdrawalRequest}
+                disabled={!withdrawalAmount || parseFloat(withdrawalAmount) <= 0}
+                className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-2 px-4 rounded-lg transition-all"
+              >
+                Send Request
+              </button>
+              <button
+                onClick={() => {
+                  setShowWithdrawalForm(false);
+                  setWithdrawalAmount('');
+                  setWithdrawalReason('');
+                  setWithdrawalError('');
+                }}
+                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-2 px-4 rounded-lg transition-all"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : (
+          <button
+            onClick={() => setShowWithdrawalForm(true)}
+            className="w-full mb-8 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3 px-6 rounded-lg transition-all flex items-center justify-center gap-2"
+          >
+            <Send className="w-5 h-5" />
+            Request Withdrawal
+          </button>
+        )}
+
         {/* Quick Overview */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
           {/* Piggy Bank */}
