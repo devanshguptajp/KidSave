@@ -16,6 +16,11 @@ export default function KidDashboard() {
   const navigate = useNavigate();
   const [child, setChild] = useState<any | null>(null);
   const [state, setState] = useState(getAppState());
+  const [showWithdrawalForm, setShowWithdrawalForm] = useState(false);
+  const [withdrawalAmount, setWithdrawalAmount] = useState('');
+  const [withdrawalReason, setWithdrawalReason] = useState('');
+  const [withdrawalError, setWithdrawalError] = useState('');
+  const [withdrawalSuccess, setWithdrawalSuccess] = useState('');
 
   useEffect(() => {
     const childId = localStorage.getItem("currentChildId");
