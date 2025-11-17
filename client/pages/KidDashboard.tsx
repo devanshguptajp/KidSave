@@ -59,7 +59,10 @@ export default function KidDashboard() {
             <p className="text-gray-600">Your Money Dashboard</p>
           </div>
           <div className="flex items-center gap-4">
-            <button className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+            <button
+              onClick={() => navigate('/kid-notifications')}
+              className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+            >
               <Bell className="w-6 h-6" />
               {unreadNotifications > 0 && (
                 <span className="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
