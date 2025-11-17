@@ -8,9 +8,14 @@ import SetupWizard from "./pages/SetupWizard";
 import ParentLogin from "./pages/ParentLogin";
 import ParentDashboard from "./pages/ParentDashboard";
 import ParentSettings from "./pages/ParentSettings";
+import ParentNotifications from "./pages/ParentNotifications";
 import ChildDetails from "./pages/ChildDetails";
 import KidLogin from "./pages/KidLogin";
 import KidDashboard from "./pages/KidDashboard";
+import KidNotifications from "./pages/KidNotifications";
+import KidSavings from "./pages/KidSavings";
+import KidCategories from "./pages/KidCategories";
+import KidGoals from "./pages/KidGoals";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
