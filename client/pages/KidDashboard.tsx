@@ -128,7 +128,10 @@ export default function KidDashboard() {
               {currencySymbol}
               {child.piggyBank.toFixed(2)}
             </p>
-            <button className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white font-bold py-2 px-4 rounded-lg transition-all">
+            <button
+              onClick={() => navigate('/kid-savings')}
+              className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white font-bold py-2 px-4 rounded-lg transition-all"
+            >
               Manage
             </button>
           </div>
