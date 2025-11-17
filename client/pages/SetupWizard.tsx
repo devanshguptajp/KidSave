@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Currency } from "@shared/types";
-import { setCurrency } from "@/lib/appState";
+import { setCurrency, getAppState } from "@/lib/appState";
 import { setParentPin } from "@/lib/appState";
 import { formatPinInput } from "@/lib/pinValidation";
 import { ArrowRight, Lock } from "lucide-react";
@@ -15,6 +15,13 @@ export default function SetupWizard() {
   const [pin, setPin] = useState("");
   const [confirmPin, setConfirmPin] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const state = getAppState();
+    if (state.setupComplete) {
+      navigate("/parent-login");
+    }
+  }, [navigate]);
 
   const handleCurrencySelect = (selected: Currency) => {
     setCurrencyState(selected);
