@@ -33,12 +33,17 @@ export default function App() {
             <Route path="/parent-login" element={<ParentLogin />} />
             <Route path="/parent-dashboard" element={<ParentDashboard />} />
             <Route path="/parent-settings" element={<ParentSettings />} />
+            <Route path="/parent-notifications" element={<ParentNotifications />} />
             <Route
               path="/parent-child-details/:childId"
               element={<ChildDetails />}
             />
             <Route path="/kid-login" element={<KidLogin />} />
             <Route path="/kid-dashboard" element={<KidDashboard />} />
+            <Route path="/kid-notifications" element={<KidNotifications />} />
+            <Route path="/kid-savings" element={<KidSavings />} />
+            <Route path="/kid-categories" element={<KidCategories />} />
+            <Route path="/kid-goals" element={<KidGoals />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
