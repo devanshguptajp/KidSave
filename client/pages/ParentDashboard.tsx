@@ -92,6 +92,12 @@ export default function ParentDashboard() {
               <Bell className="w-6 h-6" />
             </button>
             <button
+              onClick={() => navigate('/parent-settings')}
+              className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <Settings className="w-6 h-6" />
+            </button>
+            <button
               onClick={handleLogout}
               className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
             >
