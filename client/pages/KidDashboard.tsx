@@ -90,7 +90,17 @@ export default function KidDashboard() {
   }
 
   const currencySymbol = getCurrencySymbol(state.currency);
-  const unreadNotifications = child.notifications.length;
+  const allNotifications = child.notifications
+    .map((id: string) => {
+      try {
+        const stored = localStorage.getItem(`notification_${id}`);
+        return stored ? JSON.parse(stored) : null;
+      } catch {
+        return null;
+      }
+    })
+    .filter((n) => n !== null);
+  const unreadNotifications = allNotifications.filter((n: any) => !n.read).length;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-50">
