@@ -312,10 +312,72 @@ export default function KidCategories() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {child.categories.map((category: any) => (
               <div key={category.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
+                {deleteConfirmation === category.id && (
+                  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-2xl shadow-xl p-8 max-w-sm">
+                      <h3 className="text-xl font-bold text-gray-900 mb-4">Delete Category?</h3>
+                      <p className="text-gray-600 mb-6">
+                        Are you sure you want to delete "{category.name}"? This action cannot be undone, but the money in it will remain in your balance.
+                      </p>
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() => setDeleteConfirmation(null)}
+                          className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-2 rounded-lg transition-colors"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={() => handleDeleteCategory(category.id)}
+                          className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg transition-colors"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {showMoneyForm === category.id && (
+                  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-2xl shadow-xl p-8 max-w-sm">
+                      <h3 className="text-xl font-bold text-gray-900 mb-4">
+                        {moneyAction === 'add' ? 'Add Money' : 'Subtract Money'}
+                      </h3>
+                      <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Amount</label>
+                        <input
+                          type="number"
+                          value={moneyAmount}
+                          onChange={(e) => setMoneyAmount(e.target.value)}
+                          placeholder="0.00"
+                          className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600"
+                        />
+                      </div>
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() => {
+                            setShowMoneyForm(null);
+                            setMoneyAmount('');
+                          }}
+                          className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-2 rounded-lg transition-colors"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={handleAddMoneyToCategory}
+                          className={`flex-1 ${moneyAction === 'add' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'} text-white font-bold py-2 rounded-lg transition-colors`}
+                        >
+                          {moneyAction === 'add' ? 'Add' : 'Subtract'}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex items-start justify-between mb-4">
                   <h3 className="text-xl font-bold text-gray-900">{category.name}</h3>
                   <button
-                    onClick={() => handleDeleteCategory(category.id)}
+                    onClick={() => setDeleteConfirmation(category.id)}
                     className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                   >
                     <Trash2 className="w-5 h-5" />
@@ -325,6 +387,29 @@ export default function KidCategories() {
                 <p className="text-3xl font-bold text-blue-600 mb-4">
                   {currencySymbol}{category.balance.toFixed(2)}
                 </p>
+
+                <div className="flex gap-2 mb-4">
+                  <button
+                    onClick={() => {
+                      setShowMoneyForm(category.id);
+                      setMoneyAction('add');
+                      setMoneyAmount('');
+                    }}
+                    className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition-colors text-sm"
+                  >
+                    + Add
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowMoneyForm(category.id);
+                      setMoneyAction('subtract');
+                      setMoneyAmount('');
+                    }}
+                    className="flex-1 bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 rounded-lg transition-colors text-sm"
+                  >
+                    - Subtract
+                  </button>
+                </div>
 
                 {category.autoSplit && (
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-gray-700">
