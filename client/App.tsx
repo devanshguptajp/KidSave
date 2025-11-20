@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { getAppState, updateChild, saveNotification, addChildNotification } from "./lib/appState";
 import Landing from "./pages/Landing";
 import SetupWizard from "./pages/SetupWizard";
 import ParentLogin from "./pages/ParentLogin";
@@ -20,6 +22,38 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+function AllowanceProcessor() {
+  useEffect(() => {
+    const state = getAppState();
+    const today = new Date().toDateString();
+    const lastProcessDate = localStorage.getItem("lastAllowanceProcessDate");
+
+    if (lastProcessDate !== today) {
+      state.children.forEach((child) => {
+        if (child.allowanceAmount && child.allowanceAmount > 0) {
+          child.balance += child.allowanceAmount;
+
+          const notification = {
+            id: Date.now().toString() + Math.random(),
+            type: "allowance" as const,
+            message: `Your daily allowance of ${child.allowanceAmount.toFixed(2)} has been credited!`,
+            timestamp: Date.now(),
+            read: false,
+          };
+
+          saveNotification(notification);
+          addChildNotification(child.id, notification);
+          updateChild(child.id, child);
+        }
+      });
+
+      localStorage.setItem("lastAllowanceProcessDate", today);
+    }
+  }, []);
+
+  return null;
+}
+
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -27,6 +61,7 @@ export default function App() {
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <AllowanceProcessor />
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/setup" element={<SetupWizard />} />
