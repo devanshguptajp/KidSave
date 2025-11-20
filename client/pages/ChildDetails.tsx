@@ -70,10 +70,40 @@ export default function ChildDetails() {
       return;
     }
 
-    const updatedChild = {
+    let updatedChild = {
       ...child,
       balance: child.balance + parsedAmount,
     };
+
+    // Apply auto-split rules to categories
+    if (child.categories && child.categories.length > 0) {
+      const updatedCategories = child.categories.map((category: any) => {
+        if (category.autoSplit) {
+          let splitAmount = 0;
+          if (category.percentage) {
+            splitAmount = (parsedAmount * category.percentage) / 100;
+          } else if (category.fixedAmount) {
+            splitAmount = category.fixedAmount;
+          }
+          return {
+            ...category,
+            balance: category.balance + splitAmount,
+          };
+        }
+        return category;
+      });
+
+      const totalSplit = updatedCategories.reduce((sum: number, cat: any) => {
+        const originalCat = child.categories.find((c: any) => c.id === cat.id);
+        return sum + (cat.balance - (originalCat?.balance || 0));
+      }, 0);
+
+      updatedChild = {
+        ...updatedChild,
+        balance: updatedChild.balance - totalSplit,
+        categories: updatedCategories,
+      };
+    }
 
     updateChild(child.id, updatedChild);
     setChild(updatedChild);
