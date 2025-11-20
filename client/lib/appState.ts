@@ -161,6 +161,9 @@ export function createWithdrawalRequest(
 
 export function getPendingWithdrawalRequests(): any[] {
   const state = getAppState();
+  if (!state.withdrawalRequests) {
+    return [];
+  }
   return state.withdrawalRequests.filter((r) => r.status === "pending");
 }
 
