@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getChild, updateChild } from "@/lib/appState";
+import { getChild, updateChild, saveNotification, addChildNotification } from "@/lib/appState";
 import { getCurrencySymbol, formatCurrency } from "@/lib/currency";
 import { formatPinInput, hashPin, validatePin } from "@/lib/pinValidation";
 import {
@@ -76,6 +77,20 @@ export default function ChildDetails() {
 
     updateChild(child.id, updatedChild);
     setChild(updatedChild);
+
+    // Create notification for the child
+    const notification = {
+      id: Date.now().toString() + Math.random(),
+      type: "money_added" as const,
+      message: `${currencySymbol}${parsedAmount.toFixed(2)} has been added to your account${reason ? ` (${reason})` : ''}`,
+      timestamp: Date.now(),
+      amount: parsedAmount,
+      read: false,
+    };
+
+    saveNotification(notification);
+    addChildNotification(child.id, notification);
+
     setSuccess(
       `Successfully added ${currencySymbol}${parsedAmount.toFixed(2)}`,
     );
@@ -105,6 +120,20 @@ export default function ChildDetails() {
 
     updateChild(child.id, updatedChild);
     setChild(updatedChild);
+
+    // Create notification for the child
+    const notification = {
+      id: Date.now().toString() + Math.random(),
+      type: "money_subtracted" as const,
+      message: `${currencySymbol}${parsedAmount.toFixed(2)} has been subtracted from your account${reason ? ` (${reason})` : ''}`,
+      timestamp: Date.now(),
+      amount: parsedAmount,
+      read: false,
+    };
+
+    saveNotification(notification);
+    addChildNotification(child.id, notification);
+
     setSuccess(
       `Successfully subtracted ${currencySymbol}${parsedAmount.toFixed(2)}`,
     );
@@ -133,6 +162,19 @@ export default function ChildDetails() {
 
     updateChild(child.id, updatedChild);
     setChild(updatedChild);
+
+    // Create notification for the child
+    const notification = {
+      id: Date.now().toString() + Math.random(),
+      type: "password_changed" as const,
+      message: `Your PIN has been updated by your parent`,
+      timestamp: Date.now(),
+      read: false,
+    };
+
+    saveNotification(notification);
+    addChildNotification(child.id, notification);
+
     setSuccess("PIN set successfully");
     setNewPin("");
     setConfirmPin("");
