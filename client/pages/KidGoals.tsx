@@ -17,6 +17,10 @@ export default function KidGoals() {
   const [targetAmount, setTargetAmount] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [deleteConfirmation, setDeleteConfirmation] = useState<string | null>(null);
+  const [showMoneyForm, setShowMoneyForm] = useState<string | null>(null);
+  const [moneyAmount, setMoneyAmount] = useState('');
+  const [moneyAction, setMoneyAction] = useState<'add' | 'subtract'>('add');
 
   useEffect(() => {
     const childId = localStorage.getItem('currentChildId');
@@ -130,14 +134,61 @@ export default function KidGoals() {
   };
 
   const handleDeleteGoal = (goalId: string) => {
-    if (confirm('Are you sure you want to delete this goal?')) {
-      const updatedChild = {
-        ...child,
-        goals: child.goals.filter((g: any) => g.id !== goalId),
-      };
-      updateChild(child.id, updatedChild);
-      setChild(updatedChild);
+    const goalToDelete = child.goals.find((g: any) => g.id === goalId);
+    if (goalToDelete && goalToDelete.currentAmount > 0) {
+      setError('Cannot delete goal with money in it. Please withdraw the balance first.');
+      setDeleteConfirmation(null);
+      return;
     }
+    const updatedChild = {
+      ...child,
+      goals: child.goals.filter((g: any) => g.id !== goalId),
+    };
+    updateChild(child.id, updatedChild);
+    setChild(updatedChild);
+    setDeleteConfirmation(null);
+    setSuccess('Goal deleted successfully!');
+  };
+
+  const handleAdjustGoalAmount = () => {
+    if (!moneyAmount || parseFloat(moneyAmount) <= 0) {
+      setError('Please enter a valid amount');
+      return;
+    }
+
+    const amount = parseFloat(moneyAmount);
+    const goalIndex = child.goals.findIndex((g: any) => g.id === showMoneyForm);
+    if (goalIndex === -1) return;
+
+    const updatedGoals = [...child.goals];
+    const goal = updatedGoals[goalIndex];
+
+    if (moneyAction === 'add') {
+      goal.currentAmount += amount;
+      if (goal.currentAmount >= goal.targetAmount) {
+        goal.currentAmount = goal.targetAmount;
+        goal.completed = true;
+        goal.completedDate = Date.now();
+      }
+    } else {
+      if (goal.currentAmount < amount) {
+        setError('Cannot subtract more than the current goal amount');
+        return;
+      }
+      goal.currentAmount -= amount;
+      goal.completed = false;
+    }
+
+    const updatedChild = {
+      ...child,
+      goals: updatedGoals,
+    };
+
+    updateChild(child.id, updatedChild);
+    setChild(updatedChild);
+    setShowMoneyForm(null);
+    setMoneyAmount('');
+    setSuccess(`${moneyAction === 'add' ? 'Added' : 'Subtracted'} ${moneyAmount} ${moneyAction === 'add' ? 'to' : 'from'} goal!`);
   };
 
   if (!child) {
