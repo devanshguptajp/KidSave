@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getChild, updateChild, saveNotification, addChildNotification } from '@/lib/appState';
 import { getCurrencySymbol } from '@/lib/currency';
-import { ArrowLeft, Plus, Trash2, Target } from 'lucide-react';
+import { ArrowLeft, Plus, Trash2, Target, Minus } from 'lucide-react';
 
 function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
