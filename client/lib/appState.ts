@@ -153,6 +153,9 @@ export function createWithdrawalRequest(
     requestedAt: Date.now(),
   };
 
+  if (!state.withdrawalRequests) {
+    state.withdrawalRequests = [];
+  }
   state.withdrawalRequests.push(request);
   saveAppState(state);
 
@@ -169,11 +172,17 @@ export function getPendingWithdrawalRequests(): any[] {
 
 export function getWithdrawalRequest(id: string): any | undefined {
   const state = getAppState();
+  if (!state.withdrawalRequests) {
+    return undefined;
+  }
   return state.withdrawalRequests.find((r) => r.id === id);
 }
 
 export function approveWithdrawalRequest(requestId: string): void {
   const state = getAppState();
+  if (!state.withdrawalRequests) {
+    return;
+  }
   const request = state.withdrawalRequests.find((r) => r.id === requestId);
 
   if (request && request.status === "pending") {
@@ -189,6 +198,9 @@ export function approveWithdrawalRequest(requestId: string): void {
 
 export function declineWithdrawalRequest(requestId: string): void {
   const state = getAppState();
+  if (!state.withdrawalRequests) {
+    return;
+  }
   const request = state.withdrawalRequests.find((r) => r.id === requestId);
 
   if (request && request.status === "pending") {
