@@ -19,6 +19,10 @@ export default function KidCategories() {
   const [splitValue, setSplitValue] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [deleteConfirmation, setDeleteConfirmation] = useState<string | null>(null);
+  const [showMoneyForm, setShowMoneyForm] = useState<string | null>(null);
+  const [moneyAmount, setMoneyAmount] = useState('');
+  const [moneyAction, setMoneyAction] = useState<'add' | 'subtract'>('add');
 
   useEffect(() => {
     const childId = localStorage.getItem('currentChildId');
@@ -83,14 +87,52 @@ export default function KidCategories() {
   };
 
   const handleDeleteCategory = (categoryId: string) => {
-    if (confirm('Are you sure you want to delete this category?')) {
-      const updatedChild = {
-        ...child,
-        categories: child.categories.filter((c: any) => c.id !== categoryId),
-      };
-      updateChild(child.id, updatedChild);
-      setChild(updatedChild);
+    const categoryToDelete = child.categories.find((c: any) => c.id === categoryId);
+    if (categoryToDelete && categoryToDelete.balance > 0) {
+      setError('Cannot delete category with money in it. Please transfer the balance first.');
+      return;
     }
+    const updatedChild = {
+      ...child,
+      categories: child.categories.filter((c: any) => c.id !== categoryId),
+    };
+    updateChild(child.id, updatedChild);
+    setChild(updatedChild);
+    setDeleteConfirmation(null);
+    setSuccess('Category deleted successfully!');
+  };
+
+  const handleAddMoneyToCategory = () => {
+    if (!moneyAmount || parseFloat(moneyAmount) <= 0) {
+      setError('Please enter a valid amount');
+      return;
+    }
+
+    const amount = parseFloat(moneyAmount);
+    const categoryIndex = child.categories.findIndex((c: any) => c.id === showMoneyForm);
+    if (categoryIndex === -1) return;
+
+    const updatedCategories = [...child.categories];
+    if (moneyAction === 'add') {
+      updatedCategories[categoryIndex].balance += amount;
+    } else {
+      if (updatedCategories[categoryIndex].balance < amount) {
+        setError('Insufficient balance in this category');
+        return;
+      }
+      updatedCategories[categoryIndex].balance -= amount;
+    }
+
+    const updatedChild = {
+      ...child,
+      categories: updatedCategories,
+    };
+
+    updateChild(child.id, updatedChild);
+    setChild(updatedChild);
+    setShowMoneyForm(null);
+    setMoneyAmount('');
+    setSuccess(`${moneyAction === 'add' ? 'Added' : 'Subtracted'} ${moneyAmount} from category!`);
   };
 
   if (!child) {
