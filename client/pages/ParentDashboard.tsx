@@ -88,7 +88,10 @@ export default function ParentDashboard() {
             <p className="text-gray-600">Currency: {state.currency}</p>
           </div>
           <div className="flex items-center gap-4">
-            <button className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+            <button
+              onClick={() => navigate('/parent-notifications')}
+              className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+            >
               <Bell className="w-6 h-6" />
             </button>
             <button
